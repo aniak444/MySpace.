@@ -17,8 +17,10 @@ async function main() {
 
   const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
 
-  await prisma.user.create({
-    data: {
+  const admin = await prisma.user.upsert({
+    where: { email: 'admin@myspace.com' },
+    update: {},
+    create: { 
       email: 'admin@myspace.com',
       password: hashedPassword,
       role: 'ADMIN',
@@ -26,8 +28,10 @@ async function main() {
   });
 
 
-  await prisma.user.create({
-    data: {
+  const user = await prisma.user.upsert({
+    where: { email: 'user@myspace.com' },
+    update: {},
+    create: {
       email: 'user@myspace.com',
       password: hashedPassword,
       role: 'USER',
@@ -52,8 +56,6 @@ async function main() {
   });
 
   console.log('Baza zresetowana.');
-  console.log('Admin: admin@myspace.com (hasło: sekretnehaslo)');
-  console.log('User:  user@myspace.com  (hasło: sekretnehaslo)');
 }
 
 main()
