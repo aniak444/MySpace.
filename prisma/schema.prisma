@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      String   @default("USER")
+  createdAt DateTime @default(now())
+
+  tasks     Task[]
+  habits    Habit[]
+  journal   JournalEntry[]
+  goals     Goal[]
+  visionItems VisionItem[]
+  mapCountries MapCountry[]
+}
+
+
+// TO DO
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  title       String
+  isCompleted Boolean  @default(false)
+  category    String?
+  createdAt   DateTime @default(now())
+  priority    String   @default("LOW") // low medium lub high
+  deadline    DateTime?
+  
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+
+// MAPA
+
+model MapCountry {
+  id          Int      @id @default(autoincrement())
+  countryCode String
+  status      String
+  
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+
+// HABIT 
+
+model Habit {
+  id          Int      @id @default(autoincrement())
+  name        String   
+  streak      Int      @default(0)
+  
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  
+  logs        HabitLog[]
+}
+
+
+// HABITLOG 
+
+model HabitLog {
+  id        Int      @id @default(autoincrement())
+  date      DateTime @default(now())
+  
+  habitId   Int
+  habit     Habit    @relation(fields: [habitId], references: [id])
+}
+
+
+// DIGITAL JOURNAL 
+
+model JournalEntry {
+  id        Int      @id @default(autoincrement())
+  content   String 
+  mood      String
+  createdAt DateTime @default(now())
+  
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+
+// VISION BOARD
+
+model Goal {
+  id          Int      @id @default(autoincrement())
+  title       String
+  isCompleted Boolean  @default(false)
+  year        Int     
+  createdAt   DateTime @default(now())
+  
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model VisionItem {
+  id          Int      @id @default(autoincrement())
+  imageUrl    String   
+  year        Int      
+  
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+}
