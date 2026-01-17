@@ -18,7 +18,7 @@ const apiFetch = async (url, options = {}) => {
   }
 
   try {
-    const response = await fetch(`http://localhost:3000${url}`, {
+    const response = await fetch(`https://myspace-jml8.onrender.com${url}`, {
       ...options,
       headers,
     });
@@ -44,7 +44,7 @@ function AuthPage({ onLogin }) {
     const endpoint = isLogin ? '/login' : '/register';
     
     try {
-      const res = await fetch(`http://localhost:3000${endpoint}`, {
+      const res = await fetch(`https://myspace-jml8.onrender.com${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -677,7 +677,7 @@ export default function App() {
     }
 
     const onLogout = () => {
-       console.log("Odebrano sygnał wylogowania! 🚨");
+       console.log("Odebrano sygnał wylogowania");
        toast.error("Sesja wygasła. Zaloguj się ponownie.");
        handleLogout();
     };
