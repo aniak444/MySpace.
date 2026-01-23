@@ -697,7 +697,7 @@ export default function App() {
       inactivityTimer = setTimeout(() => {
         toast.error("Wylogowano z powodu braku aktywności.");
         handleLogout();
-      }, 30 * 60 * 1000); 
+      }, 40 * 60 * 1000); 
     };
     window.addEventListener('mousemove', resetTimer);
     window.addEventListener('click', resetTimer);
