@@ -85,7 +85,7 @@ app.post('/login', authLimiter, async (req, res) => {
   const isValid = await bcrypt.compare(password, user.password);
   if (!isValid) return res.status(400).json({ error: "Błędny email lub hasło" });
 
-  const token = jwt.sign({ userId: user.id, role: user.role }, SECRET_KEY, { expiresIn: '45m' });
+  const token = jwt.sign({ userId: user.id, role: user.role }, SECRET_KEY, { expiresIn: '65m' });
   
   res.json({ token, role: user.role, email: user.email });
 });
