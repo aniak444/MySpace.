@@ -217,6 +217,18 @@ app.post('/habits/:id/toggle', authenticate, async (req, res) => {
   }
 });
 
+app.delete('/habits/:id', authenticate, async (req, res) => {
+  const id = parseInt(req.params.id);
+  await prisma.habitLog.deleteMany({
+    where: { habitId: id }
+  });
+  await prisma.habit.delete({
+    where: { id: id }
+  });
+
+  res.json({ message: "Nawyk usunięty" });
+});
+
 // JOURNAL
 app.get('/journal', authenticate, async (req, res) => {
   const entries = await prisma.journalEntry.findMany({ 
