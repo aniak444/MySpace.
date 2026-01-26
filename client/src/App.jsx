@@ -294,6 +294,12 @@ function Dashboard() {
     }
   };
 
+  const deleteHabit = async (id) => {
+    if (!window.confirm("Na pewno chcesz usunąć ten nawyk?")) return;
+    await apiFetch(`/habits/${id}`, { method: 'DELETE' });
+    fetchData();
+  };
+  
   useEffect(() => {
     fetchData();
     const year = new Date().getFullYear();
@@ -418,6 +424,13 @@ function Dashboard() {
               <strong>{habit.name}</strong>
               <div style={{ fontSize: '12px', color: '#aaa', marginTop: '4px' }}>Seria: {habit.streak} dni 🔥</div>
               </div>
+            <div style={{ display: 'flex', gap: '10px' }}>
+       <button 
+          onClick={() => deleteHabit(habit.id)}
+          style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '18px' }}
+       >
+         ×
+       </button>
             <button className={`habit-btn ${habit.completedToday ? 'active' : ''}`} onClick={() => toggleHabit(habit)}>✓</button>
           </div>
         ))}
