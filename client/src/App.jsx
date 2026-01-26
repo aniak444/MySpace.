@@ -294,11 +294,6 @@ function Dashboard() {
     }
   };
 
-  const deleteHabit = async (id) => {
-    if (!window.confirm("Na pewno chcesz usunąć ten nawyk?")) return;
-    await apiFetch(`/habits/${id}`, { method: 'DELETE' });
-    fetchData();
-  };
   
   useEffect(() => {
     fetchData();
@@ -314,6 +309,12 @@ function Dashboard() {
     if (!newTask) return;
     await apiFetch('/tasks', { method: 'POST', body: JSON.stringify({ title: newTask, priority, deadline }) });
     setNewTask(""); setPriority("LOW"); setDeadline(""); fetchData();
+  };
+
+   const deleteHabit = async (id) => {
+    if (!window.confirm("Na pewno chcesz usunąć ten nawyk?")) return;
+    await apiFetch(`/habits/${id}`, { method: 'DELETE' });
+    fetchData();
   };
 
   const toggleTask = async (t) => {
