@@ -327,6 +327,15 @@ function Dashboard() {
     setNewHabit(""); fetchData();
   };
 
+  const deleteHabit = (id) => {
+    if (!window.confirm("Usunąć ten nawyk?")) return;
+    setHabits(currentHabits => currentHabits.filter(h => h.id !== id));
+    setTimeout(async () => {
+       await apiFetch(`/habits/${id}`, { method: 'DELETE' });
+       fetchData(); 
+    }, 3000);
+  };
+
   const toggleHabit = async (habit) => {
     const isDone = habit.completedToday;
     setHabits(habits.map(h => h.id === habit.id ? { ...h, completedToday: !isDone, streak: isDone ? h.streak-1 : h.streak+1 } : h));
@@ -421,6 +430,11 @@ function Dashboard() {
               <strong>{habit.name}</strong>
               <div style={{ fontSize: '12px', color: '#aaa', marginTop: '4px' }}>Seria: {habit.streak} dni 🔥</div>
               </div>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+               <button 
+                  onClick={() => deleteHabit(habit.id)}
+                  style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '20px', fontWeight: 'bold' }}
+                  title="Usuń nawyk">×</button></div>
             <button className={`habit-btn ${habit.completedToday ? 'active' : ''}`} onClick={() => toggleHabit(habit)}>✓</button>
           </div>
         ))}
