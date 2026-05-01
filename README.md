@@ -1,8 +1,8 @@
 # 🌌 My Space - Personal Productivity & Wellbeing Dashboard
 
-**My Space** is a Full-Stack Single Page Application (SPA) designed to help you manage your time, habits, goals, and daily wellbeing. It bridges the gap between getting things done and taking care of yourself.
+**My Space** is a full-stack Single Page Application (SPA) designed to help users effectively manage their time, build positive habits, achieve goals, and take care of their mental wellbeing - all in one place.
 
-## 🚀 What's inside? (Features)
+## 🚀 Web app features
 
 * **✅ Smart To-Do List:** Manage tasks with priorities and deadlines. I implemented an **Optimistic UI** approach here – when you check off or delete a task, it visually disappears instantly to make the app feel lightning-fast, while the database updates quietly in the background.
 * **🔥 Advanced Habit Tracker:** It doesn't just check boxes. The custom backend logic calculates your daily streaks automatically by tracking the exact dates of your activity.
@@ -12,7 +12,7 @@
 * **📸 Vision Board (Drag & Drop):** Upload your daily inspiration. Images are processed directly in the browser (using `FileReader`) and saved to the database as **Base64 Data URLs**, bypassing the need for an external file server.
 * **🛡️ Admin Panel:** A dedicated dashboard for user management and site statistics, secured with Role-Based Access Control (RBAC) – strictly accessible only to users with the `ADMIN` role.
 
-## 🧠 Under the Hood (Architecture & Security)
+## 🧠 Architecture & Security
 
 * **🔑 Stateless Authentication:** Secure login using **JWT (JSON Web Tokens)** stored safely in `localStorage`. 
 * **⚡ Event-Driven Architecture:** I built a custom API wrapper (`apiFetch`) that handles expired tokens globally. If your session dies, it dispatches a global event (`window.dispatchEvent`) that instantly logs you out, no matter which component you're currently using.
